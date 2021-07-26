@@ -22,6 +22,7 @@ if (!empty($_POST['submitted'])) {
         echo "kdjfsdqmljmsqdf";
         $errors['avatar'] = "Image obligatoire";
     } else {
+        //skfgjqsf
         if (['type'] === "image/jpg" || $_FILES['avatar']['type'] === "image/jpeg" || $_FILES['avatar']['type'] === "image/png" || $_FILES['avatar']['type'] === "image/webp") {
             //success
             var_dump("success",getimagesize($_FILES['avatar']['tmp_name']));
