@@ -25,7 +25,7 @@ if (!empty($_POST['submitted'])) {
         if (['type'] === "image/jpg" || $_FILES['avatar']['type'] === "image/jpeg" || $_FILES['avatar']['type'] === "image/png" || $_FILES['avatar']['type'] === "image/webp") {
             //success
             var_dump("success",getimagesize($_FILES['avatar']['tmp_name']));
-
+                    
         } else {
             $errors['avatar'] = "Le format n'est pas bon";
         }
