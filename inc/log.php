@@ -1,4 +1,5 @@
 <?php
+session_start();
 require('func.php');
 require('pdo.php');
 
@@ -14,15 +15,18 @@ if (!empty($_POST['submitted'])) {
     if($result){
         $user = $result;
         if (!password_verify($_POST['pwd'], $user['pwd'])) {
-            $errors['invalid'] = "Votre email ou votre pwd sont incorrects!";
+            $errors['/* invalid */'] = "Votre email ou votre pwd sont incorrects!";
         }
     } else {
         $errors['invalid'] = "Votre email ou votre pwd sont incorrects!";
     }
     if(count($errors)===0){
+        // tout c'est bien passé
         echo "success!!!";
-        // ... $_SESSION
-        // header("Location: ../index.php");
+        $_SESSION['name'] = $user['name'];
+        $_SESSION['avatar'] = $user['avatar'];
+        $_SESSION['role'] = $user['role'];
+        header("Location: ../index.php");
     } else {
         // tout ne s'est pas bien passé
         header("Location: ../login.php?errors=".serialize($errors)."&data=".serialize($_POST));
@@ -30,5 +34,6 @@ if (!empty($_POST['submitted'])) {
     
 
 } else {
+    // en cas de connection via l'url je redirige l'utilisateur
     header("Location: ../index.php");
 }

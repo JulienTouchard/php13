@@ -43,18 +43,26 @@ if (!empty($_POST['submitted'])) {
             $errors['avatar'] = "Le fichier fait plus de 2 Mo";
         }
     }
+    // detection d'un email dejà présent dans la table
+    $query = $pdo->prepare("SELECT email FROM user WHERE email = :email");
+    $query->bindValue(':email', $_POST['email'], PDO::PARAM_STR);
+    $query->execute();
+    $result = $query->fetch();
+    if($result){
+        $errors['double'] = "Cet email est déjà enregistré";
+    }
 
     if (count($errors) === 0) {
         //hash password
         $pwd = password_hash($_POST['pwd'],PASSWORD_ARGON2I);
         // traitement pdo
-        $sql = "INSERT INTO user (email,pwd,name,avatar,created_at)
-        VALUES (:email,:pwd,:name,:avatar,NOW())";
+        $sql = "INSERT INTO user (email,pwd,name,avatar,created_at,role)
+        VALUES (:email,:pwd,:name,:avatar,NOW(),'ROLE_USER')";
         $query = $pdo->prepare($sql);
         $query->bindValue(':email', $_POST['email'], PDO::PARAM_STR);
         $query->bindValue(':pwd', $pwd, PDO::PARAM_STR);
         $query->bindValue(':name', $_POST['name'], PDO::PARAM_STR);
-        $query->bindValue(':avatar', "../asset/upload/" . $_FILES['avatar']['name'], PDO::PARAM_STR);
+        $query->bindValue(':avatar', "./asset/upload/" . $_FILES['avatar']['name'], PDO::PARAM_STR);
 
         $query->execute();
         
@@ -63,6 +71,10 @@ if (!empty($_POST['submitted'])) {
         }
         move_uploaded_file($_FILES['avatar']['tmp_name'], "../asset/upload/" . $_FILES['avatar']['name']);
         // tout c'est bien passé
+        $_SESSION['name'] = $_POST['name'];
+        $_SESSION['avatar'] = "./asset/upload/" . $_FILES['avatar']['name'];
+        $_SESSION['role'] = 'ROLE_USER';
+        
         header("Location: ../index.php");
 
     } else {

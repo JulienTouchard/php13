@@ -1,4 +1,5 @@
 <?php
+session_start();
 require('inc/func.php');
 include('inc/header.php');
 
@@ -21,7 +22,7 @@ if(isset($_GET['errors'])){
           <input type="text" name="pwd" id="pwd" value="<?php if(!empty($data['pwd'])) {echo $data['pwd']; } ?>">
           <span class="error"><?php viewError($errors,'pwd'); ?></span>
 
-          <input type="submit" name="submitted" value="Ajouter">
+          <input type="submit" name="submitted" value="Se connecter">
           <span class="error"><?php viewError($errors,'invalid'); ?></span>
           
       </form>

@@ -1,4 +1,5 @@
 <?php
+session_start();
 require('inc/func.php');
 include('inc/header.php');
 
@@ -33,7 +34,7 @@ if(isset($_GET['errors'])){
           <label for="mentions">Accepter les mentions legales</label>
           <input type="checkbox" name="mentions" id="mentions">
           <span class="error"><?php viewError($errors,'mentions'); ?></span>
-
+          <span class="error"><?php viewError($errors,'double'); ?></span>
           <input type="submit" name="submitted" value="Ajouter">
       </form>
   </div>
