@@ -14,7 +14,8 @@
     <nav>
         <ul>
             <li><a href="index.php">Home</a></li>
-            <li><a href="add.php">Ajouter un rêve</a></li>
+            <li><a href="registration.php">Nouvel utilisateur</a></li>
+            <li><a href="login.php">Se connecter</a></li>
         </ul>
     </nav>
 </header>

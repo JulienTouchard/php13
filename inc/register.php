@@ -45,13 +45,14 @@ if (!empty($_POST['submitted'])) {
     }
 
     if (count($errors) === 0) {
-
+        //hash password
+        $pwd = password_hash($_POST['pwd'],PASSWORD_ARGON2I);
         // traitement pdo
         $sql = "INSERT INTO user (email,pwd,name,avatar,created_at)
         VALUES (:email,:pwd,:name,:avatar,NOW())";
         $query = $pdo->prepare($sql);
         $query->bindValue(':email', $_POST['email'], PDO::PARAM_STR);
-        $query->bindValue(':pwd', $_POST['pwd'], PDO::PARAM_STR);
+        $query->bindValue(':pwd', $pwd, PDO::PARAM_STR);
         $query->bindValue(':name', $_POST['name'], PDO::PARAM_STR);
         $query->bindValue(':avatar', "../asset/upload/" . $_FILES['avatar']['name'], PDO::PARAM_STR);
 
