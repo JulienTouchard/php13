@@ -19,23 +19,33 @@ if (!empty($_POST['submitted'])) {
     }
     // verif image
     if ($_FILES['avatar']['size'] === 0) {
-        echo "kdjfsdqmljmsqdf";
         $errors['avatar'] = "Image obligatoire";
     } else {
-        //skfgjqsf
-        if (['type'] === "image/jpg" || $_FILES['avatar']['type'] === "image/jpeg" || $_FILES['avatar']['type'] === "image/png" || $_FILES['avatar']['type'] === "image/webp") {
+        $tabTypImg = ["image/jpg","image/jpeg","image/png","image/webp"];
+        $boolImg = false;
+        for ($i=0; $i <count($tabTypImg) ; $i++) { 
+            if($_FILES['avatar']['type'] === $tabTypImg[$i]){
+                $boolImg = true;
+            }
+        }
+        $boolImg ? : $errors['avatar'] = "Le format n'est pas bon";
+
+        /* if ($_FILES['avatar']['type'] === "image/jpg" || $_FILES['avatar']['type'] === "image/jpeg" || $_FILES['avatar']['type'] === "image/png" || $_FILES['avatar']['type'] === "image/webp") {
             //success
             var_dump("success",getimagesize($_FILES['avatar']['tmp_name']));
             // commit        
         } else {
             $errors['avatar'] = "Le format n'est pas bon";
-        }
+        } */
+
+
         if ($_FILES['avatar']['size'] >= 2000000) {
             $errors['avatar'] = "Le fichier fait plus de 2 Mo";
         }
     }
 
     if (count($errors) === 0) {
+
         // traitement pdo
         $sql = "INSERT INTO user (email,pwd,name,avatar,created_at)
         VALUES (:email,:pwd,:name,:avatar,NOW())";
@@ -56,7 +66,7 @@ if (!empty($_POST['submitted'])) {
 
     } else {
         // tout ne s'est pas bien passé
-        // header("Location: ../registration.php?errors=".serialize($errors)."&data=".serialize($_POST));
+        header("Location: ../registration.php?errors=".serialize($errors)."&data=".serialize($_POST));
     }
     debug($_FILES);
     debug($errors);
