@@ -6,7 +6,13 @@ function debug($tableau)
     print_r($tableau);
     echo '</pre>';
 }
-
+function dd($tableau)
+{
+    echo '<pre style="height:200px;overflow: scroll; font-size: .8em;padding: 10px;font-family: Consolas, Monospace; background-color: #000;color:#fff;">';
+    var_dump($tableau);
+    echo '</pre>';
+    die;
+}
 
 function validText($errors,$value,$key,$min,$max){
     if(!empty($value)) {
