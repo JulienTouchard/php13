@@ -2,13 +2,16 @@
 session_start();
 require_once("../inc/pdo.php");
 require_once("../inc/func.php");
+// protection de la page
 if (!isset($_SESSION['role']) || $_SESSION['role'] === "ROLE_USER") {
     header("Location: ../index.php");
     die;
 }
 
 if (!empty($_POST['submitted'])) {
+    // creation du tableau d'erreur
     $errors = [];
+    // existance d'une nouvelle image
     $boolImg = false;
     // get id
     if (isset($_GET['id'])) {
@@ -21,7 +24,7 @@ if (!empty($_POST['submitted'])) {
         $_POST[$key] = xss($value);
     }
     // valid text
-    $errors = validText($errors, $_POST['pwd'], 'pwd', 5, 8);
+    $errors = validText($errors, $_POST['pwd'], 'pwd', 5, 8, false);
     $errors = validText($errors, $_POST['name'], 'name', 5, 10);
     // valid email
     $errors = validEmail($errors, $_POST['email']);
@@ -36,7 +39,7 @@ if (!empty($_POST['submitted'])) {
                 $boolImg = true;
             }
         }
-        $boolImg ?: $errors['avatar'] = "Le format n'est pas bon";
+        $boolImg ? : $errors['avatar'] = "Le format n'est pas bon";
 
         /* if ($_FILES['avatar']['type'] === "image/jpg" || $_FILES['avatar']['type'] === "image/jpeg" || $_FILES['avatar']['type'] === "image/png" || $_FILES['avatar']['type'] === "image/webp") {
             //success
@@ -52,7 +55,6 @@ if (!empty($_POST['submitted'])) {
         }
     }
 
-
     if (count($errors) === 0) {
 
         // récup des anciennes données utilisateur
@@ -60,6 +62,7 @@ if (!empty($_POST['submitted'])) {
         $query->bindValue(':id', $id, PDO::PARAM_INT);
         $query->execute();
         $result = $query->fetch();
+
         // verification d'un changement de mot de pass
         if ($_POST['pwd'] === "") {
             $pwd = $result['pwd'];
@@ -67,6 +70,7 @@ if (!empty($_POST['submitted'])) {
             //hash password
             $pwd = password_hash($_POST['pwd'], PASSWORD_ARGON2I);
         }
+        
         // verification du changement d'image
         if ($boolImg) {
             $imgUrl = "./asset/upload/" . $_FILES['avatar']['name'];
@@ -85,12 +89,13 @@ if (!empty($_POST['submitted'])) {
 
         $query->execute();
 
-        if (!is_dir("../asset/upload")) {
-            mkdir("../asset/upload");
+        if ($boolImg) {
+            if (!is_dir("../asset/upload")) {
+                mkdir("../asset/upload");
+            }
+            move_uploaded_file($_FILES['avatar']['tmp_name'], "../asset/upload/" . $_FILES['avatar']['name']);
+            // tout c'est bien passé
         }
-        move_uploaded_file($_FILES['avatar']['tmp_name'], "../asset/upload/" . $_FILES['avatar']['name']);
-        // tout c'est bien passé
-
         header("Location: ../admin.php");
     } else {
         // tout ne s'est pas bien passé

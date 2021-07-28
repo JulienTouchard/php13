@@ -15,7 +15,7 @@ if (!empty($_POST['submitted'])) {
     if($result){
         $user = $result;
         if (!password_verify($_POST['pwd'], $user['pwd'])) {
-            $errors['/* invalid */'] = "Votre email ou votre pwd sont incorrects!";
+            $errors['invalid'] = "Votre email ou votre pwd sont incorrects!";
         }
     } else {
         $errors['invalid'] = "Votre email ou votre pwd sont incorrects!";

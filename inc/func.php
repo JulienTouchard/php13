@@ -14,7 +14,7 @@ function dd($tableau)
     die;
 }
 
-function validText($errors,$value,$key,$min,$max){
+function validText($errors,$value,$key,$min,$max,$mandatory=true){
     if(!empty($value)) {
         if(mb_strlen($value) < $min) {
             $errors[$key] = 'Min '.$min.' caractères';
@@ -22,7 +22,9 @@ function validText($errors,$value,$key,$min,$max){
             $errors[$key] = 'Max '.$max.' caractères';
         }
     } else {
-        $errors[$key] = 'Veuillez renseigner ce champ';
+        if($mandatory){
+            $errors[$key] = 'Veuillez renseigner ce champ';
+        }
     }
     return $errors;
 }
