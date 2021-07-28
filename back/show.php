@@ -16,7 +16,7 @@ $query->execute();
 $user = $query->fetch();
 
 // afficher les données d'un utilisateur
-
+include_once("../inc/header.php");
 ?>
 
 <div class="card">
@@ -39,3 +39,6 @@ $user = $query->fetch();
         <?= $user['created_at']; ?>
     </div>
 </div>
+
+<?php
+include_once("../inc/footer.php");

@@ -38,8 +38,8 @@ $i = 0;
             <td><?= $allUsers[$i]['role']; ?>
             <td><?= $allUsers[$i]['created_at']; ?>
             <td><a href="./back/show.php?id=<?= $allUsers[$i]['id']; ?>">show</a>
-            <td><a href="nomdemapageupdate?id=<?= $allUsers[$i]['id']; ?>">update</a>
-            <td><a href="nomdemapagedelete?id=<?= $allUsers[$i]['id']; ?>">delate</a>
+            <td><a href="./back/update.php?id=<?= $allUsers[$i]['id']; ?>">update</a>
+            <td><a href="./delete?id=<?= $allUsers[$i]['id']; ?>">delate</a>
         </tr>
     <?php
         $i++;
