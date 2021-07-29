@@ -16,7 +16,7 @@ $query->execute();
 $user = $query->fetch();
 
 // afficher les données d'un utilisateur
-include_once("../inc/header.php");
+include_once("./headerBack.php");
 ?>
 
 <div class="card">
@@ -41,4 +41,4 @@ include_once("../inc/header.php");
 </div>
 
 <?php
-include_once("../inc/footer.php");
+include_once("./footerBack.php");

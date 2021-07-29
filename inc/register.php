@@ -10,6 +10,11 @@ if (!empty($_POST['submitted'])) {
     }
     // valid text
     $errors = validText($errors, $_POST['pwd'], 'pwd', 5, 8);
+    // utilisation des regex
+    $pattern = "#^\S*(?={8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[0-9])(?=\S*[\W])\S*$#";
+    if(!preg_match($pattern,$_POST['pwd'])){
+        $errors['pwd'] = "Votre mot de pass doit contenir 8 caractères, 1 chiffre, 1 majuscule, 1 minuscule et un caractère spécial";
+    }
     $errors = validText($errors, $_POST['name'], 'name', 5, 10);
     // valid email
     $errors = validEmail($errors, $_POST['email']);

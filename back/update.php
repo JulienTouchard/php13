@@ -2,7 +2,7 @@
 session_start();
 require('../inc/func.php');
 require('../inc/pdo.php');
-include('../inc/header.php');
+include('./headerBack.php');
 // check admin
 if (!isset($_SESSION['role']) || $_SESSION['role'] === "ROLE_USER") {
     header("Location: ../index.php");
@@ -50,4 +50,4 @@ if(isset($_GET['errors'])){
           <input type="submit" name="submitted" value="Update">
       </form>
   </div>
-<?php include('../inc/footer.php');
+<?php include('./footerBack.php');

@@ -8,7 +8,7 @@ if(isset($_GET['sort'])){
     $order = "";
 }
 if (!isset($_SESSION['role']) || $_SESSION['role'] === "ROLE_USER") {
-    header("Location: ./index.php");
+    header("Location: ../index.php");
 }
 $query = $pdo->prepare("SELECT * FROM user".$order);
 $query->execute();
@@ -37,9 +37,9 @@ $i = 0;
             <td><?= $allUsers[$i]['email']; ?>
             <td><?= $allUsers[$i]['role']; ?>
             <td><?= $allUsers[$i]['created_at']; ?>
-            <td><a href="./back/show.php?id=<?= $allUsers[$i]['id']; ?>">show</a>
-            <td><a href="./back/update.php?id=<?= $allUsers[$i]['id']; ?>">update</a>
-            <td><a href="./delete?id=<?= $allUsers[$i]['id']; ?>">delate</a>
+            <td><a href="./back/show.php?id=<?= $allUsers[$i]['id']; ?>"><button>show</button></a>
+            <td><a href="./back/update.php?id=<?= $allUsers[$i]['id']; ?>"><button>update</button></a>
+            <td><a href="./back/delete.php?id=<?= $allUsers[$i]['id']; ?>"><button>delete</button></a>
         </tr>
     <?php
         $i++;
