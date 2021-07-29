@@ -99,7 +99,7 @@ if (!empty($_POST['submitted'])) {
         header("Location: ../admin.php");
     } else {
         // tout ne s'est pas bien passé
-        header("Location: ./update.php?errors=" . serialize($errors) . "&data=" . serialize($_POST));
+        header("Location: ./update.php?id=$id&errors=" . serialize($errors) . "&data=" . serialize($_POST));
     }
     die;
 } else {
