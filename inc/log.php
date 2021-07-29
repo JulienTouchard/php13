@@ -5,7 +5,7 @@ require('pdo.php');
 
 if (!empty($_POST['submitted'])) {
     $errors = [];
-    $errors = validText($errors, $_POST['pwd'], 'pwd', 5, 8);
+    $errors = validText($errors, $_POST['pwd'], 'pwd', 8, 15);
     $errors = validEmail($errors, $_POST['email']);
 
     $query = $pdo->prepare("SELECT * FROM user WHERE email = :email");
