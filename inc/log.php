@@ -29,6 +29,7 @@ if (!empty($_POST['submitted'])) {
         header("Location: ../index.php");
     } else {
         // tout ne s'est pas bien passé
+        $_POST['pwd'] = "";
         header("Location: ../login.php?errors=".serialize($errors)."&data=".serialize($_POST));
     }
     

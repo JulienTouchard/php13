@@ -9,11 +9,11 @@ if (!empty($_POST['submitted'])) {
         $_POST[$key] = xss($value);
     }
     // valid text
-    $errors = validText($errors, $_POST['pwd'], 'pwd', 5, 8);
+    //$errors = validText($errors, $_POST['pwd'], 'pwd', 8, 15);
     // utilisation des regex
-    $pattern = "#^\S*(?={8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[0-9])(?=\S*[\W])\S*$#";
+    $pattern = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\W])[A-Za-z0-9\W]{8,15}$/";
     if(!preg_match($pattern,$_POST['pwd'])){
-        $errors['pwd'] = "Votre mot de pass doit contenir 8 caractères, 1 chiffre, 1 majuscule, 1 minuscule et un caractère spécial";
+        $errors['pwd'] = "Votre mot de pass n'est pas conforme";
     }
     $errors = validText($errors, $_POST['name'], 'name', 5, 10);
     // valid email
@@ -84,6 +84,7 @@ if (!empty($_POST['submitted'])) {
 
     } else {
         // tout ne s'est pas bien passé
+        $_POST['pwd'] = "";
         header("Location: ../registration.php?errors=".serialize($errors)."&data=".serialize($_POST));
     }
     debug($_FILES);
